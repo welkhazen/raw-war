@@ -167,7 +167,7 @@ function Marker({
       <mesh position={lineCenter} quaternion={lineQuaternion}>
         <cylinderGeometry args={[0.003, 0.003, lineHeight, 8]} />
         <meshBasicMaterial
-          color={hovered ? "#ffffff" : "#94a3b8"}
+          color={hovered ? "#F1C42D" : "#D9D9D9"}
           transparent
           opacity={hovered ? 0.9 : 0.6}
         />
@@ -175,7 +175,7 @@ function Marker({
       {/* Pin point at the surface */}
       <mesh position={surfacePosition} quaternion={lineQuaternion}>
         <coneGeometry args={[0.015, 0.04, 8]} />
-        <meshBasicMaterial color={hovered ? "#f97316" : "#ef4444"} />
+        <meshBasicMaterial color={hovered ? "#FFE066" : "#F1C42D"} />
       </mesh>
       {/* Circular image at the top */}
       <group ref={imageGroupRef} position={topPosition}>
@@ -427,7 +427,7 @@ const defaultConfig: Required<Globe3DConfig> = {
   textureUrl: DEFAULT_EARTH_TEXTURE,
   bumpMapUrl: DEFAULT_BUMP_TEXTURE,
   showAtmosphere: false,
-  atmosphereColor: "#4da6ff",
+  atmosphereColor: "#F1C42D",
   atmosphereIntensity: 0.5,
   atmosphereBlur: 2,
   bumpScale: 1,
@@ -439,7 +439,7 @@ const defaultConfig: Required<Globe3DConfig> = {
   initialRotation: { x: 0, y: 0 },
   markerSize: 0.06,
   showWireframe: false,
-  wireframeColor: "#4a9eff",
+  wireframeColor: "#F1C42D",
   ambientIntensity: 0.6,
   pointLightIntensity: 1.5,
   backgroundColor: null,
