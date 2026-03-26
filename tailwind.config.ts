@@ -13,7 +13,20 @@ export default {
       },
     },
     extend: {
+      fontFamily: {
+        display: ["Michroma", "sans-serif"],
+        sans: ["Inter", "sans-serif"],
+      },
       colors: {
+        raw: {
+          black: "#080808",
+          surface: "#121212",
+          silver: "#D9D9D9",
+          text: "#EBEBEB",
+          gold: "#F1C42D",
+          "gold-dim": "rgba(241, 196, 45, 0.15)",
+          border: "#1a1a1a",
+        },
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
@@ -65,20 +78,12 @@ export default {
       },
       keyframes: {
         "accordion-down": {
-          from: {
-            height: "0",
-          },
-          to: {
-            height: "var(--radix-accordion-content-height)",
-          },
+          from: { height: "0" },
+          to: { height: "var(--radix-accordion-content-height)" },
         },
         "accordion-up": {
-          from: {
-            height: "var(--radix-accordion-content-height)",
-          },
-          to: {
-            height: "0",
-          },
+          from: { height: "var(--radix-accordion-content-height)" },
+          to: { height: "0" },
         },
       },
       animation: {
