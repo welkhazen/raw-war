@@ -1,7 +1,12 @@
+import { lazy, Suspense } from "react";
 import { TypewriterEffect } from "@/components/ui/typewriter-effect";
 import { Boxes } from "@/components/ui/background-boxes";
-import { Globe3D } from "@/components/ui/3d-globe";
+import { ErrorBoundary } from "@/components/ui/error-boundary";
 import type { GlobeMarker } from "@/components/ui/3d-globe";
+
+const Globe3D = lazy(() =>
+  import("@/components/ui/3d-globe").then((mod) => ({ default: mod.Globe3D }))
+);
 
 const globeMarkers: GlobeMarker[] = [
   { lat: 40.7128, lng: -74.006, src: "https://assets.aceternity.com/avatars/1.webp", label: "New York" },
@@ -13,6 +18,21 @@ const globeMarkers: GlobeMarker[] = [
   { lat: -22.9068, lng: -43.1729, src: "https://assets.aceternity.com/avatars/8.webp", label: "Rio" },
   { lat: 1.3521, lng: 103.8198, src: "https://assets.aceternity.com/avatars/12.webp", label: "Singapore" },
 ];
+
+function GlobeFallback() {
+  return (
+    <div className="flex h-full w-full items-center justify-center rounded-3xl border border-raw-border/50 bg-gradient-to-br from-raw-surface to-raw-black/50">
+      <div className="text-center">
+        <div className="mx-auto mb-4 h-16 w-16 rounded-2xl bg-gradient-to-br from-raw-gold/20 to-raw-gold/5 flex items-center justify-center">
+          <span className="font-display text-2xl text-raw-gold/60">W</span>
+        </div>
+        <p className="font-display text-[10px] tracking-[0.3em] uppercase text-raw-silver/30">
+          raW Global Network
+        </p>
+      </div>
+    </div>
+  );
+}
 
 interface HeroProps {
   onSignupClick: () => void;
@@ -79,17 +99,21 @@ export function Hero({ onSignupClick }: HeroProps) {
           {/* Right: 3D Globe */}
           <div className="flex items-center justify-center">
             <div className="relative w-full max-w-md h-[400px]">
-              <Globe3D
-                className="h-full w-full"
-                markers={globeMarkers}
-                config={{
-                  atmosphereColor: "#F1C42D",
-                  atmosphereIntensity: 20,
-                  showAtmosphere: true,
-                  bumpScale: 5,
-                  autoRotateSpeed: 0.3,
-                }}
-              />
+              <ErrorBoundary fallback={<GlobeFallback />}>
+                <Suspense fallback={<GlobeFallback />}>
+                  <Globe3D
+                    className="h-full w-full"
+                    markers={globeMarkers}
+                    config={{
+                      atmosphereColor: "#F1C42D",
+                      atmosphereIntensity: 20,
+                      showAtmosphere: true,
+                      bumpScale: 5,
+                      autoRotateSpeed: 0.3,
+                    }}
+                  />
+                </Suspense>
+              </ErrorBoundary>
             </div>
           </div>
         </div>
