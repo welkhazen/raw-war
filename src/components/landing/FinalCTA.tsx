@@ -1,3 +1,5 @@
+import { ContainerTextFlip } from "@/components/ui/container-text-flip";
+
 interface FinalCTAProps {
   onSignupClick: () => void;
 }
@@ -10,10 +12,16 @@ export function FinalCTA({ onSignupClick }: FinalCTAProps) {
 
       <div className="relative mx-auto max-w-2xl text-center">
         <h2 className="font-display text-3xl tracking-wide text-raw-text sm:text-4xl">
-          Join early. Stay anonymous.{" "}
-          <span className="text-metallic">Grow with the system.</span>
+          Join early. Stay{" "}
         </h2>
-        <p className="mt-5 text-base text-raw-silver/50 max-w-lg mx-auto">
+        <div className="mt-4 flex items-center justify-center">
+          <ContainerTextFlip
+            words={["anonymous", "connected", "yourself", "raW"]}
+            interval={2500}
+            className="!text-3xl sm:!text-4xl"
+          />
+        </div>
+        <p className="mt-6 text-base text-raw-silver/50 max-w-lg mx-auto">
           Be part of the first communities, shape the first signals, and build your identity from day one.
         </p>
 
