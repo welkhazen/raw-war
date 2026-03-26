@@ -218,15 +218,15 @@ function tokenizeBash(text: string): Token[] {
   return tokens;
 }
 const tokenColors: Record<TokenType, string> = {
-  command: "text-emerald-400",
-  flag: "text-sky-400",
-  string: "text-amber-300",
-  number: "text-purple-400",
-  operator: "text-red-400",
-  path: "text-cyan-300",
-  variable: "text-pink-400",
-  comment: "text-neutral-500",
-  default: "text-neutral-300",
+  command: "text-raw-gold",
+  flag: "text-raw-silver",
+  string: "text-[#FFE066]",
+  number: "text-[#D4A81A]",
+  operator: "text-raw-silver/60",
+  path: "text-raw-silver/80",
+  variable: "text-raw-gold/70",
+  comment: "text-raw-silver/30",
+  default: "text-raw-text",
 };
 function SyntaxHighlightedText({ text }: { text: string }) {
   const tokens = tokenizeBash(text);
@@ -366,11 +366,11 @@ export function Terminal({
     }
   }, [lines, phase]);
   const prompt = (
-    <span className="text-neutral-500">
-      <span className="text-sky-500">{username}</span>
-      <span className="text-emerald-600">:</span>
-      <span className="text-sky-400">~</span>
-      <span className="text-neutral-500">$</span>{" "}
+    <span className="text-raw-silver/40">
+      <span className="text-raw-gold">{username}</span>
+      <span className="text-raw-silver/60">:</span>
+      <span className="text-raw-silver/80">~</span>
+      <span className="text-raw-silver/40">$</span>{" "}
     </span>
   );
   return (
@@ -381,16 +381,16 @@ export function Terminal({
         className,
       )}
     >
-      <div className="overflow-hidden rounded-lg border border-neutral-800 bg-neutral-900 shadow-2xl">
+      <div className="overflow-hidden rounded-2xl border border-raw-border bg-raw-black shadow-2xl">
         {/* Title Bar */}
-        <div className="flex items-center gap-2 bg-neutral-800 px-4 py-3">
+        <div className="flex items-center gap-2 bg-raw-surface px-4 py-3">
           <div className="flex items-center gap-1.5">
             <div className="h-3 w-3 rounded-full bg-red-500 transition-colors hover:bg-red-600" />
             <div className="h-3 w-3 rounded-full bg-yellow-500 transition-colors hover:bg-yellow-600" />
             <div className="h-3 w-3 rounded-full bg-green-500 transition-colors hover:bg-green-600" />
           </div>
           <div className="flex-1 text-center">
-            <span className="truncate text-xs text-neutral-400">
+            <span className="truncate text-xs text-raw-silver/40">
               {username} — bash
             </span>
           </div>
@@ -409,7 +409,7 @@ export function Terminal({
                   <SyntaxHighlightedText text={line.content} />
                 </span>
               ) : (
-                <span className="text-neutral-400">{line.content}</span>
+                <span className="text-raw-silver/50">{line.content}</span>
               )}
             </div>
           ))}
@@ -417,7 +417,7 @@ export function Terminal({
             <div className="leading-relaxed whitespace-pre-wrap">
               {prompt}
               <SyntaxHighlightedText text={currentText} />
-              <span className="ml-0.5 inline-block h-4 w-2 bg-neutral-300 align-middle" />
+              <span className="ml-0.5 inline-block h-4 w-2 bg-raw-gold align-middle" />
             </div>
           )}
           {(phase === "done" ||
@@ -427,7 +427,7 @@ export function Terminal({
               {prompt}
               <span
                 className={cn(
-                  "inline-block h-4 w-2 bg-neutral-300 align-middle transition-opacity duration-100",
+                  "inline-block h-4 w-2 bg-raw-gold align-middle transition-opacity duration-100",
                   !cursorVisible && "opacity-0",
                 )}
               />
