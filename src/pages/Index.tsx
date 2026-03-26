@@ -1,12 +1,59 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+import { Navbar } from "@/components/landing/Navbar";
+import { Hero } from "@/components/landing/Hero";
+import { HowItWorks } from "@/components/landing/HowItWorks";
+import { PollSection } from "@/components/landing/PollSection";
+import { Communities } from "@/components/landing/Communities";
+import { AvatarIdentity } from "@/components/landing/AvatarIdentity";
+import { WhyAnonymity } from "@/components/landing/WhyAnonymity";
+import { FoundingProviders } from "@/components/landing/FoundingProviders";
+import { FinalCTA } from "@/components/landing/FinalCTA";
+import { SignupModal } from "@/components/landing/SignupModal";
+import { useRawStore } from "@/store/useRawStore";
 
 const Index = () => {
+  const {
+    user,
+    isLoggedIn,
+    polls,
+    votedPolls,
+    freeVotesUsed,
+    showSignup,
+    setShowSignup,
+    avatarLevel,
+    setAvatarLevel,
+    vote,
+    signup,
+  } = useRawStore();
+
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background">
-      <div className="text-center">
-        <h1 className="mb-4 text-4xl font-bold">Welcome to Your Blank App</h1>
-        <p className="text-xl text-muted-foreground">Start building your amazing project here!</p>
-      </div>
+    <div className="min-h-screen bg-raw-black">
+      <Navbar
+        isLoggedIn={isLoggedIn}
+        username={user?.username}
+        onSignupClick={() => setShowSignup(true)}
+      />
+
+      <Hero onSignupClick={() => setShowSignup(true)} />
+      <HowItWorks />
+      <PollSection
+        polls={polls}
+        votedPolls={votedPolls}
+        isLoggedIn={isLoggedIn}
+        freeVotesUsed={freeVotesUsed}
+        onVote={vote}
+        onSignupClick={() => setShowSignup(true)}
+      />
+      <Communities onSignupClick={() => setShowSignup(true)} />
+      <AvatarIdentity avatarLevel={avatarLevel} onLevelChange={setAvatarLevel} />
+      <WhyAnonymity />
+      <FoundingProviders />
+      <FinalCTA onSignupClick={() => setShowSignup(true)} />
+
+      <SignupModal
+        open={showSignup}
+        onClose={() => setShowSignup(false)}
+        onSignup={signup}
+      />
     </div>
   );
 };
