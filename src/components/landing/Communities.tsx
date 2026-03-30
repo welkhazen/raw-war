@@ -1,22 +1,5 @@
-interface CommunityCardProps {
-  title: string;
-  description: string;
-  badge: string;
-}
-
-function CommunityCard({ title, description, badge }: CommunityCardProps) {
-  return (
-    <div className="group rounded-2xl border border-raw-border/50 bg-raw-surface/50 p-8 transition-all hover:border-raw-gold/20 hover:bg-raw-surface">
-      <div className="mb-5 inline-block rounded-full border border-raw-gold/20 bg-raw-gold/5 px-3 py-1">
-        <span className="text-[10px] font-medium tracking-wider text-raw-gold/70 uppercase">
-          {badge}
-        </span>
-      </div>
-      <h3 className="font-display text-base tracking-wide text-raw-text">{title}</h3>
-      <p className="mt-3 text-sm leading-relaxed text-raw-silver/50">{description}</p>
-    </div>
-  );
-}
+import { GlareCard } from "@/components/ui/glare-card";
+import { WorldMap } from "@/components/ui/world-map";
 
 const communities = [
   {
@@ -39,6 +22,15 @@ const communities = [
   },
 ];
 
+const communityConnections = [
+  { start: { lat: 40.7128, lng: -74.006 }, end: { lat: 51.5074, lng: -0.1278 } },
+  { start: { lat: 51.5074, lng: -0.1278 }, end: { lat: 28.6139, lng: 77.209 } },
+  { start: { lat: 28.6139, lng: 77.209 }, end: { lat: 35.6762, lng: 139.6503 } },
+  { start: { lat: 35.6762, lng: 139.6503 }, end: { lat: -33.8688, lng: 151.2093 } },
+  { start: { lat: 40.7128, lng: -74.006 }, end: { lat: -22.9068, lng: -43.1729 } },
+  { start: { lat: 51.5074, lng: -0.1278 }, end: { lat: 1.3521, lng: 103.8198 } },
+];
+
 interface CommunitiesProps {
   onSignupClick: () => void;
 }
@@ -58,7 +50,17 @@ export function Communities({ onSignupClick }: CommunitiesProps) {
 
         <div className="grid gap-6 md:grid-cols-3">
           {communities.map((c) => (
-            <CommunityCard key={c.title} {...c} />
+            <GlareCard key={c.title}>
+              <div className="rounded-2xl border border-raw-border/50 bg-raw-surface/50 p-8">
+                <div className="mb-5 inline-block rounded-full border border-raw-gold/20 bg-raw-gold/5 px-3 py-1">
+                  <span className="text-[10px] font-medium tracking-wider text-raw-gold/70 uppercase">
+                    {c.badge}
+                  </span>
+                </div>
+                <h3 className="font-display text-base tracking-wide text-raw-text">{c.title}</h3>
+                <p className="mt-3 text-sm leading-relaxed text-raw-silver/50">{c.description}</p>
+              </div>
+            </GlareCard>
           ))}
         </div>
 
@@ -71,22 +73,12 @@ export function Communities({ onSignupClick }: CommunitiesProps) {
           </button>
         </div>
 
-        {/* Future community map placeholder */}
-        <div className="mt-16 rounded-2xl border border-raw-border/30 bg-raw-surface/30 p-12 text-center">
-          <div className="mx-auto max-w-xs">
-            <div className="mx-auto mb-4 flex items-center justify-center gap-3">
-              {[...Array(5)].map((_, i) => (
-                <div
-                  key={i}
-                  className="h-3 w-3 rounded-full bg-raw-gold/20 animate-subtle-pulse"
-                  style={{ animationDelay: `${i * 0.4}s` }}
-                />
-              ))}
-            </div>
-            <p className="font-display text-[10px] tracking-[0.3em] uppercase text-raw-silver/25">
-              Live Community Map — Coming Soon
-            </p>
-          </div>
+        {/* World Map showing community connections */}
+        <div className="mt-16">
+          <p className="mb-4 text-center font-display text-[10px] tracking-[0.3em] uppercase text-raw-silver/40">
+            Communities worldwide
+          </p>
+          <WorldMap dots={communityConnections} lineColor="#F1C42D" />
         </div>
       </div>
     </section>
