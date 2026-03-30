@@ -8,6 +8,7 @@ import {
   HelpCircle,
   Flame,
 } from "lucide-react";
+import { AvatarFigure, getAvatarTheme } from "@/components/ui/avatar-figure";
 import type { DashboardTab } from "./DashboardNav";
 
 interface DashboardSidebarProps {
@@ -27,18 +28,7 @@ const navItems: { icon: typeof Home; label: string; tab: DashboardTab | "home" }
   { icon: BarChart3, label: "Growth Stats", tab: "profile" },
 ];
 
-const LEVEL_COLORS: Record<number, string> = {
-  1: "#555",
-  2: "#666",
-  3: "#777",
-  4: "#888",
-  5: "#999",
-  6: "#C4A76C",
-  7: "#D4B77C",
-  8: "#E8C84A",
-  9: "#F1C42D",
-  10: "#FFE066",
-};
+// Avatar colors now come from AvatarFigure component
 
 export function DashboardSidebar({
   activeTab,
@@ -48,23 +38,13 @@ export function DashboardSidebar({
   onHomeClick,
   isHome,
 }: DashboardSidebarProps) {
-  const levelColor = LEVEL_COLORS[avatarLevel] || "#555";
-
   return (
     <aside className="fixed left-0 top-14 bottom-0 z-40 hidden w-[200px] flex-col border-r border-raw-border/30 bg-raw-black lg:flex">
       {/* User card */}
       <div className="p-4 pt-5">
         <div className="rounded-xl bg-gradient-to-br from-raw-surface to-raw-black border border-raw-border/40 p-4">
           <div className="flex items-center gap-3">
-            <div
-              className="h-10 w-10 rounded-xl flex items-center justify-center shrink-0"
-              style={{
-                background: `linear-gradient(135deg, ${levelColor}80, ${levelColor})`,
-                boxShadow: avatarLevel >= 8 ? `0 0 12px ${levelColor}40` : "none",
-              }}
-            >
-              <span className="font-display text-sm text-white/90">W</span>
-            </div>
+            <AvatarFigure level={avatarLevel} size="sm" selected />
             <div className="min-w-0">
               <p className="text-sm font-medium text-raw-gold truncate">{username}</p>
               <p className="text-[10px] text-raw-silver/40">Level {avatarLevel}</p>
