@@ -8,6 +8,7 @@ import { WhyAnonymity } from "@/components/landing/WhyAnonymity";
 import { FoundingProviders } from "@/components/landing/FoundingProviders";
 import { FinalCTA } from "@/components/landing/FinalCTA";
 import { SignupModal } from "@/components/landing/SignupModal";
+import Dashboard from "@/pages/Dashboard";
 import { useRawStore } from "@/store/useRawStore";
 
 const Index = () => {
@@ -24,6 +25,20 @@ const Index = () => {
     vote,
     signup,
   } = useRawStore();
+
+  // Show dashboard when logged in
+  if (isLoggedIn && user) {
+    return (
+      <Dashboard
+        user={user}
+        polls={polls}
+        votedPolls={votedPolls}
+        avatarLevel={avatarLevel}
+        setAvatarLevel={setAvatarLevel}
+        vote={vote}
+      />
+    );
+  }
 
   return (
     <div className="min-h-screen bg-raw-black">
