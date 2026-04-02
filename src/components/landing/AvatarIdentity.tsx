@@ -1,22 +1,11 @@
 import { useState } from "react";
+import { AvatarFigure, getAvatarTheme } from "@/components/ui/avatar-figure";
+import { PhoneMockup } from "@/components/ui/phone-mockup";
 
 interface AvatarIdentityProps {
   avatarLevel: number;
   onLevelChange: (level: number) => void;
 }
-
-const LEVEL_COLORS = [
-  { from: "#333", to: "#555" },
-  { from: "#3a3a3a", to: "#666" },
-  { from: "#444", to: "#777" },
-  { from: "#4a4a4a", to: "#888" },
-  { from: "#555", to: "#999" },
-  { from: "#8B7355", to: "#C4A76C" },
-  { from: "#9B8365", to: "#D4B77C" },
-  { from: "#B8941A", to: "#E8C84A" },
-  { from: "#D4A81A", to: "#F1C42D" },
-  { from: "#F1C42D", to: "#FFE066" },
-];
 
 const features = [
   {
@@ -40,7 +29,7 @@ const features = [
 export function AvatarIdentity({ avatarLevel, onLevelChange }: AvatarIdentityProps) {
   const [hoveredLevel, setHoveredLevel] = useState<number | null>(null);
   const displayLevel = hoveredLevel ?? avatarLevel;
-  const colors = LEVEL_COLORS[displayLevel - 1];
+  const theme = getAvatarTheme(displayLevel);
 
   return (
     <section id="avatar" className="relative py-28 px-6">
@@ -71,69 +60,98 @@ export function AvatarIdentity({ avatarLevel, onLevelChange }: AvatarIdentityPro
             </p>
           </div>
 
-          {/* Right: Phone mockup */}
+          {/* Right: Avatar display + Phone mockup */}
           <div className="flex flex-col items-center">
-            <div className="relative mx-auto w-[280px]">
-              {/* Phone frame */}
-              <div className="rounded-[2.5rem] border-2 border-raw-border/60 bg-raw-black p-3 shadow-2xl">
-                {/* Notch */}
-                <div className="mx-auto mb-3 h-6 w-24 rounded-full bg-raw-surface" />
-                {/* Screen */}
-                <div className="rounded-[2rem] bg-raw-surface/80 p-6 min-h-[360px] flex flex-col items-center justify-center">
-                  {/* Avatar preview */}
-                  <div
-                    className="h-28 w-28 rounded-3xl transition-all duration-500 flex items-center justify-center"
-                    style={{
-                      background: `linear-gradient(135deg, ${colors.from}, ${colors.to})`,
-                      boxShadow: displayLevel >= 8 ? `0 0 30px ${colors.to}40` : "none",
-                    }}
-                  >
-                    <span className="font-display text-3xl text-white/80">W</span>
-                  </div>
-                  <p className="mt-4 font-display text-xs tracking-wider text-raw-silver/60">
-                    LVL {displayLevel}
-                  </p>
-
-                  {/* Mini app icon preview */}
-                  <div className="mt-8 flex items-center gap-3">
-                    <div
-                      className="h-12 w-12 rounded-xl transition-all duration-500 flex items-center justify-center"
-                      style={{
-                        background: `linear-gradient(135deg, ${colors.from}, ${colors.to})`,
-                      }}
-                    >
-                      <span className="font-display text-[10px] text-white/80">raW</span>
-                    </div>
-                    <div>
-                      <p className="text-[10px] text-raw-silver/50">Your app icon</p>
-                      <p className="text-[10px] text-raw-silver/30">Updates with your level</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
+            {/* Large selected avatar */}
+            <div className="mb-2">
+              <AvatarFigure level={displayLevel} size="xl" selected />
             </div>
+            <p className="font-display text-sm tracking-[0.2em] uppercase text-raw-text mt-1">
+              Level {displayLevel}
+            </p>
+            <p className="text-xs text-raw-silver/40 mt-0.5">{theme.name}</p>
 
-            {/* Level selector */}
-            <div className="mt-8 flex items-center gap-2">
+            {/* Level selector row */}
+            <div className="mt-6 flex items-center gap-2 flex-wrap justify-center">
               {Array.from({ length: 10 }, (_, i) => i + 1).map((lvl) => (
                 <button
                   key={lvl}
                   onClick={() => onLevelChange(lvl)}
                   onMouseEnter={() => setHoveredLevel(lvl)}
                   onMouseLeave={() => setHoveredLevel(null)}
-                  className={`h-9 w-9 rounded-lg text-[10px] font-bold transition-all ${
-                    lvl === avatarLevel
-                      ? "bg-raw-gold text-raw-black scale-110"
-                      : "bg-raw-surface/60 text-raw-silver/40 hover:bg-raw-surface hover:text-raw-silver/70"
-                  }`}
+                  className="flex flex-col items-center gap-1 group"
                 >
-                  {lvl}
+                  <AvatarFigure
+                    level={lvl}
+                    size="sm"
+                    selected={lvl === avatarLevel}
+                  />
+                  <span className={`text-[9px] font-bold tracking-wider transition-colors ${
+                    lvl === avatarLevel
+                      ? "text-raw-gold"
+                      : "text-raw-silver/30 group-hover:text-raw-silver/60"
+                  }`}>
+                    LVL {lvl}
+                  </span>
                 </button>
               ))}
+            </div>
+
+            {/* Phone mockup showing avatar as app icon */}
+            <div className="mt-10">
+              <p className="text-center font-display text-[10px] tracking-[0.3em] uppercase text-raw-silver/30 mb-4">
+                Your app icon
+              </p>
+              <PhoneMockup>
+                {/* Fake home screen */}
+                <div className="bg-gradient-to-b from-[#e8e8e8] to-[#d0d0d0] px-5 py-4 min-h-[480px]">
+                  {/* App grid */}
+                  <div className="grid grid-cols-4 gap-x-4 gap-y-5">
+                    {/* Row 1: placeholder icons */}
+                    <AppIcon color="#32D74B" label="FaceTime" />
+                    <AppIcon color="#FF3B30" label="Calendar" />
+                    <AppIcon color="#FF9500" label="Photos" />
+                    <AppIcon color="#5856D6" label="Camera" />
+
+                    {/* Row 2 */}
+                    <AppIcon color="#000000" label="Clock" />
+                    <AppIcon color="#34C759" label="Maps" />
+                    <AppIcon color="#5AC8FA" label="Weather" />
+                    <AppIcon color="#FFCC00" label="Notes" />
+
+                    {/* Row 3: raW app + others */}
+                    <AppIcon color="#FF2D55" label="Music" />
+                    <AppIcon color="#AF52DE" label="Podcasts" />
+                    {/* raW avatar icon - THE MAIN FEATURE */}
+                    <div className="flex flex-col items-center gap-1">
+                      <div
+                        className="h-[52px] w-[52px] rounded-[12px] flex items-center justify-center shadow-md overflow-hidden"
+                        style={{ background: theme.bg }}
+                      >
+                        <AvatarFigure level={displayLevel} size="sm" />
+                      </div>
+                      <span className="text-[8px] text-[#333] font-medium">raW</span>
+                    </div>
+                    <AppIcon color="#007AFF" label="Safari" />
+                  </div>
+                </div>
+              </PhoneMockup>
             </div>
           </div>
         </div>
       </div>
     </section>
+  );
+}
+
+function AppIcon({ color, label }: { color: string; label: string }) {
+  return (
+    <div className="flex flex-col items-center gap-1">
+      <div
+        className="h-[52px] w-[52px] rounded-[12px] shadow-sm"
+        style={{ background: color, opacity: 0.7 }}
+      />
+      <span className="text-[8px] text-[#333] font-medium">{label}</span>
+    </div>
   );
 }

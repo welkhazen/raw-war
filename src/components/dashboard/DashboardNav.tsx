@@ -1,4 +1,5 @@
 import { Bell } from "lucide-react";
+import { AvatarFigure } from "@/components/ui/avatar-figure";
 
 export type DashboardTab = "polls" | "communities" | "marketplace" | "profile";
 
@@ -52,9 +53,7 @@ export function DashboardNav({ activeTab, onTabChange, username, avatarLevel }: 
             <div className="absolute -top-0.5 -right-0.5 h-2 w-2 rounded-full bg-raw-gold" />
           </button>
           <button className="flex items-center gap-2.5">
-            <div className="h-8 w-8 rounded-full bg-gradient-to-br from-raw-gold/30 to-raw-gold/10 flex items-center justify-center ring-1 ring-raw-gold/20">
-              <span className="text-xs font-bold text-raw-gold">{username[0]?.toUpperCase()}</span>
-            </div>
+            <AvatarFigure level={avatarLevel} size="sm" selected />
           </button>
         </div>
       </div>
