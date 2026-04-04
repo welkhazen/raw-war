@@ -21,36 +21,30 @@ export interface Poll {
 const INITIAL_POLLS: Poll[] = [
   {
     id: "poll-1",
-    question: "What drains you most right now?",
+    question: "Do you believe your thoughts shape your reality?",
     options: [
-      { id: "p1-1", text: "Social pressure", votes: 127 },
-      { id: "p1-2", text: "Lack of direction", votes: 203 },
-      { id: "p1-3", text: "Burnout", votes: 184 },
-      { id: "p1-4", text: "Loneliness", votes: 156 },
+      { id: "p1-yes", text: "Yes", votes: 482 },
+      { id: "p1-no", text: "No", votes: 187 },
     ],
     locked: false,
   },
   {
     id: "poll-2",
-    question: "What do you need more of these days?",
+    question: "Do you think social media does more harm than good?",
     options: [
-      { id: "p2-1", text: "Discipline", votes: 189 },
-      { id: "p2-2", text: "Calm", votes: 142 },
-      { id: "p2-3", text: "Belonging", votes: 231 },
-      { id: "p2-4", text: "Clarity", votes: 167 },
+      { id: "p2-yes", text: "Yes", votes: 391 },
+      { id: "p2-no", text: "No", votes: 274 },
     ],
     locked: false,
   },
   {
     id: "poll-3",
-    question: "What would help you the most right now?",
+    question: "Would you sacrifice comfort for personal growth?",
     options: [
-      { id: "p3-1", text: "Someone to talk to", votes: 198 },
-      { id: "p3-2", text: "A structured routine", votes: 154 },
-      { id: "p3-3", text: "A safe community", votes: 176 },
-      { id: "p3-4", text: "Professional guidance", votes: 132 },
+      { id: "p3-yes", text: "Yes", votes: 523 },
+      { id: "p3-no", text: "No", votes: 146 },
     ],
-    locked: true,
+    locked: false,
   },
 ];
 
@@ -66,7 +60,7 @@ export function useRawStore() {
 
   const vote = useCallback(
     (pollId: string, optionId: string) => {
-      if (!isLoggedIn && freeVotesUsed >= 2) {
+      if (!isLoggedIn && freeVotesUsed >= 3) {
         setShowSignup(true);
         return;
       }
