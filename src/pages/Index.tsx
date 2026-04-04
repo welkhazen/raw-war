@@ -49,7 +49,6 @@ const Index = () => {
       />
 
       <Hero onSignupClick={() => setShowSignup(true)} />
-      <HowItWorks />
       <PollSection
         polls={polls}
         votedPolls={votedPolls}
@@ -58,6 +57,7 @@ const Index = () => {
         onVote={vote}
         onSignupClick={() => setShowSignup(true)}
       />
+      <HowItWorks />
       <Communities onSignupClick={() => setShowSignup(true)} />
       <AvatarIdentity avatarLevel={avatarLevel} onLevelChange={setAvatarLevel} />
       <WhyAnonymity />
